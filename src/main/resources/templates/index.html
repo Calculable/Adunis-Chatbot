@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
-  <head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>ADUNIS Chatbot</title>
-      <link rel = "stylesheet" type = "text/css" href = "css/page_style.css" />
+      <link rel = "stylesheet" type = "text/css" href = "css/style.css" />
 
   </head>
   <body>
@@ -17,9 +18,10 @@
 
     <button type="submit">Senden</button>
 
-        <img src="img/robot.gif"><br><br>
-
     </form>
+
+    <img src="img/robot.gif"><br><br>
+    <h2 th:if="${botAnswer}" th:text="'Der Roboter sagt: ' + ${botAnswer}"></h2>
 	
   </body>
 </html>
