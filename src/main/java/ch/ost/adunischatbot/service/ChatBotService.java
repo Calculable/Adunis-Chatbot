@@ -22,11 +22,26 @@ public class ChatBotService {
         session = SessionName.of(PROJECT_ID, UUID.randomUUID().toString());
     }
 
-    public String sendMessage(String userMessage) {
+    public QueryResult sendMessage(String userMessage) {
         TextInput.Builder textInput = TextInput.newBuilder().setText(userMessage).setLanguageCode(LANGUAGE_CODE);
         QueryInput queryInput = QueryInput.newBuilder().setText(textInput).build();
         DetectIntentResponse response = sessionsClient.detectIntent(session, queryInput);
         QueryResult queryResult = response.getQueryResult();
-        return queryResult.getFulfillmentText();
+        //return queryResult.getFulfillmentText();
+        return queryResult;
+    }
+    
+    public float getSentiment(QueryResult queryResult) {
+    	float score = queryResult.getSentimentAnalysisResult().getQueryTextSentiment().getScore();
+    	return score;
+    }
+    
+    public float getConfidence(QueryResult queryResult) {
+    	float score = queryResult.getIntentDetectionConfidence();
+    	return score;
+    }
+    
+    public String getMessage(QueryResult queryResult) {
+    	return queryResult.getFulfillmentText();
     }
 }

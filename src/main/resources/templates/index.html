@@ -19,9 +19,16 @@
     <button type="submit">Senden</button>
 
     </form>
-
-    <img src="img/robot.gif"><br><br>
-    <h2 th:if="${botAnswer}" th:text="'Der Roboter sagt: ' + ${botAnswer}"></h2>
+	<div id="parent">
+		<img class="inline" id="left" src="img/robot.gif" width="400" height="400"><br><br>
+		<h2 class="block" th:if="${botAnswer}" th:text="'Der Roboter sagt: '"></h2>
+		<h2 class="block" th:if="${botAnswer}" th:text="${botAnswer}"></h2>
+	</div>
+	
+	<div id="parent" class="block">
+		<h3 th:if="${userSentiment}" th:text="'User Sentiment bei: ' + ${userSentiment}"></h3>
+	</div>
+	
 	
   </body>
 </html>
