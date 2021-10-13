@@ -21,13 +21,34 @@
     </form>
 	<div id="parent">
 		<img class="inline" id="left" src="img/robot.gif" width="400" height="400"><br><br>
-		<h2 class="block" th:if="${botAnswer}" th:text="'Der Roboter sagt: '"></h2>
-		<h2 class="block" th:if="${botAnswer}" th:text="${botAnswer}"></h2>
+		<h2 class="block" th:if="${answer?.answerMessage}" th:text="'Der Roboter sagt: '"></h2>
+		<h2 class="block" th:if="${answer?.answerMessage}" th:text="${answer.answerMessage}"></h2>
 	</div>
-	
-	<div id="parent" class="block">
-		<h3 th:if="${userSentiment}" th:text="'User Sentiment bei: ' + ${userSentiment}"></h3>
+
+
+
+	<div id="sentiment" class="block">
+		<h3 th:if="${answer?.sentimentScore}" th:text="'User Sentiment bei: ' + ${answer.sentimentScore}"></h3>
 	</div>
+
+    <div id="intend" class="block">
+        <h3 th:if="${answer?.intend}" th:text="'Erkannter Intend: ' + ${answer.intend}"></h3>
+        <h3 th:if="${answer?.intendConfidenceScore}" th:text="'Erkannt mit Sicherheit: ' + ${answer.intendConfidenceScore}"></h3>
+    </div>
+
+    <div id="user-data-fields" class="block" th:if="${answer?.userDataFields}" >
+        <h3>Werte</h3>
+
+
+        <div th:each="entry : ${answer.userDataFields}">
+            <strong><span th:text="${entry.key} + ': '"/></strong>
+            <span th:text="${#strings.isEmpty(entry.value) ? '?' : entry.value}"/>
+         </div>
+
+
+        <h3 th:text="${answer.hasAllNecessaryInformation()? 'Alle benötigten Informationen liegen vor.' : 'Noch nicht alle benötigten Informationen liegen vor.'}"></h3>
+
+    </div>
 	
 	
   </body>

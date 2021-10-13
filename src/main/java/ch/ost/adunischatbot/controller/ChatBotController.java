@@ -1,5 +1,6 @@
 package ch.ost.adunischatbot.controller;
 
+import ch.ost.adunischatbot.model.ChatBotAnswer;
 import ch.ost.adunischatbot.model.UserInput;
 import ch.ost.adunischatbot.service.ChatBotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,8 @@ public class ChatBotController {
 			, Model model) {
 
         System.out.println(input.getUserText());
-        //String answer = chatBotService.sendMessage(input.getUserText());
-        QueryResult result = chatBotService.sendMessage(input.getUserText());
-		model.addAttribute("botAnswer", chatBotService.getMessage(result));
-		model.addAttribute("userSentiment", chatBotService.getSentiment(result));
-		model.addAttribute("botConfidence", chatBotService.getConfidence(result));
+        ChatBotAnswer answer = chatBotService.sendMessage(input.getUserText());
+		model.addAttribute("answer", answer);
         return "index";
 	}
 
