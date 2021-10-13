@@ -1,10 +1,15 @@
 package ch.ost.adunischatbot.model;
 
+import ch.ost.adunischatbot.service.SoundPlayer;
+import com.google.cloud.dialogflow.v2.DetectIntentResponse;
 import com.google.cloud.dialogflow.v2.QueryResult;
 import com.google.protobuf.Value;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
+
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -13,9 +18,11 @@ import java.util.stream.Collectors;
 public class ChatBotAnswer {
 
     private QueryResult queryResult;
+    private byte[] outputAudio;
 
-    public ChatBotAnswer(QueryResult queryResult) {
-        this.queryResult = queryResult;
+    public ChatBotAnswer(DetectIntentResponse response) {
+        this.queryResult = response.getQueryResult();
+        this.outputAudio = response.getOutputAudio().toByteArray();
     }
 
     public float getSentimentScore() {
@@ -52,5 +59,7 @@ public class ChatBotAnswer {
         return queryResult.getIntent().getDisplayName();
     }
 
-
+    public  byte[] getOutputAudio() {
+        return outputAudio;
+    }
 }

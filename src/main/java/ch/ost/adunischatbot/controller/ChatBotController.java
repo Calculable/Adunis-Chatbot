@@ -3,6 +3,7 @@ package ch.ost.adunischatbot.controller;
 import ch.ost.adunischatbot.model.ChatBotAnswer;
 import ch.ost.adunischatbot.model.UserInput;
 import ch.ost.adunischatbot.service.ChatBotService;
+import ch.ost.adunischatbot.service.SoundPlayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,7 @@ public class ChatBotController {
         System.out.println(input.getUserText());
         ChatBotAnswer answer = chatBotService.sendMessage(input.getUserText());
 		model.addAttribute("answer", answer);
+        SoundPlayer.playClip(answer.getOutputAudio()); //ok this is a little hack ;) the audio should be played on the client, not on the server but it works for the demo :D
         return "index";
 	}
 

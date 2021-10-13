@@ -24,11 +24,31 @@ public class ChatBotService {
     }
 
     public ChatBotAnswer sendMessage(String userMessage) {
-        TextInput.Builder textInput = TextInput.newBuilder().setText(userMessage).setLanguageCode(LANGUAGE_CODE);
+
+        TextInput.Builder textInput = TextInput.newBuilder()
+                .setText(userMessage)
+                .setLanguageCode(LANGUAGE_CODE);
+
         QueryInput queryInput = QueryInput.newBuilder().setText(textInput).build();
-        DetectIntentResponse response = sessionsClient.detectIntent(session, queryInput);
-        QueryResult queryResult = response.getQueryResult();
-        return new ChatBotAnswer(queryResult);
+
+        //see https://github.com/dialogflow/dialogflow-java-client-v2/blob/master/samples/src/main/java/com/example/dialogflow/DetectIntentTTSResponses.java
+        OutputAudioEncoding audioEncoding = OutputAudioEncoding.OUTPUT_AUDIO_ENCODING_LINEAR_16;
+        int sampleRateHertz = 16000;
+        OutputAudioConfig outputAudioConfig =
+                OutputAudioConfig.newBuilder()
+                        .setAudioEncoding(audioEncoding)
+                        .setSampleRateHertz(sampleRateHertz)
+                        .build();
+
+        DetectIntentRequest detectIntentRequest =
+                DetectIntentRequest.newBuilder()
+                        .setQueryInput(queryInput)
+                        .setOutputAudioConfig(outputAudioConfig)
+                        .setSession(session.toString())
+                        .build();
+
+        DetectIntentResponse response = sessionsClient.detectIntent(detectIntentRequest);
+        return new ChatBotAnswer(response);
     }
 
 }

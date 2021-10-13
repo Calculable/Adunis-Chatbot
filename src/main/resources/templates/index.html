@@ -36,7 +36,7 @@
         <h3 th:if="${answer?.intendConfidenceScore}" th:text="'Erkannt mit Sicherheit: ' + ${answer.intendConfidenceScore}"></h3>
     </div>
 
-    <div id="user-data-fields" class="block" th:if="${answer?.userDataFields}" >
+    <div id="user-data-fields" class="block" th:if="${answer?.userDataFields != null and answer.userDataFields.size() &gt; 0}" >
         <h3>Werte</h3>
 
 
@@ -49,7 +49,53 @@
         <h3 th:text="${answer.hasAllNecessaryInformation()? 'Alle benötigten Informationen liegen vor.' : 'Noch nicht alle benötigten Informationen liegen vor.'}"></h3>
 
     </div>
-	
+
+
+    <script  th:inline="javascript">
+
+        //see https://stackoverflow.com/questions/56426744/how-to-play-the-output-audio-from-dialogflow-int-array
+
+
+
+        function playOutput(byteArray){
+
+            var arrayBuffer = new ArrayBuffer(byteArray.length);
+            var bufferView = new Uint8Array(arrayBuffer);
+            for (let i = 0; i < byteArray.length; i++) {
+                bufferView[i] = byteArray[i];
+            }
+
+            let audioContext = new AudioContext();
+            let outputSource;
+            try {
+                if(arrayBuffer.byteLength > 0){
+                    console.log(arrayBuffer.byteLength);
+                    audioContext.decodeAudioData(arrayBuffer,
+                        function(buffer){
+                            audioContext.resume();
+                            outputSource = audioContext.createBufferSource();
+                            outputSource.connect(audioContext.destination);
+                            outputSource.buffer = buffer;
+                            outputSource.start(0);
+                        },
+                        function(){
+                            console.log(arguments);
+                        });
+                }
+            } catch(e) {
+                console.log(e);
+            }
+        }
+
+        /*<![CDATA[*/
+
+        var audioOutput = /*[[${answer?.outputAudio}]]*/ undefined;
+        if (audioOutput) {
+            playOutput(audioOutput)
+        }
+        /*]]>*/
+
+    </script>
 	
   </body>
 </html>
