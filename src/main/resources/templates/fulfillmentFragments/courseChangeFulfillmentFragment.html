@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerfiles">
+    <meta charset="UTF-8" />
+</head>
+<body>
+
+<div th:fragment="content (fulfillment)">
+
+    <span th:text="'Wir freuen uns, dich schon bald im Studiengang ' + ${fulfillment.course} + ' begrüssen zu dürfen! ' + 'Hier sind noch einige Informationen zum Studiengang, welche dich interessieren könnten:'"></span>
+
+
+    <ul>
+        <li><a href="/" th:text="'Anmeldung Infoveranstaltung ' + ${fulfillment.course}"></a></li>
+        <li><a href="/">Studienschwerpunkte</a></li>
+        <li><a href="/">Studieninhalt</a></li>
+        <li><a href="/">Studienalltag</a></li>
+    </ul>
+
+
+</div>
+
+</body>
+</html>

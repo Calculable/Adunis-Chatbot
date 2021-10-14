@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerfiles">
+    <meta charset="UTF-8" />
+</head>
+<body>
+
+<div th:fragment="content (fulfillment)">
+    <span>Klicke hier, um die Datei herunterzuladen:</span>
+    <button th:text="'Download ' + ${fulfillment.reportSemester} + '-' + ${fulfillment.semester} + '-' + ${fulfillment.year} + '.pdf'"></button>
+
+
+
+
+</div>
+
+</body>
+</html>

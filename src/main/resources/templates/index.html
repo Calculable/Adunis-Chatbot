@@ -50,12 +50,21 @@
 
     </div>
 
+    <div id="fulfillment" style="background-color: lightgreen; display: inline-block" th:if="${answer?.hasAllNecessaryInformation()}">
+
+        <h3>Anfrage erfolgreich abgeschlossen</h3>
+        <div th:if="${answer.courseChangeFulfillment}" th:insert="fulfillmentFragments/courseChangeFulfillmentFragment.html :: content (fulfillment=${answer.courseChangeFulfillment})"> </div>
+        <div th:if="${answer.exmatriculationFulfillment}" th:insert="fulfillmentFragments/exmatriculationFulfillmentFragment.html :: content (fulfillment=${answer.exmatriculationFulfillment})"> </div>
+        <div th:if="${answer.pauseStudyFulfillment}" th:insert="fulfillmentFragments/pauseStudyFulfillmentFragment.html :: content (fulfillment=${answer.pauseStudyFulfillment})"> </div>
+        <div th:if="${answer.semesterReportFulfillment}" th:insert="fulfillmentFragments/semesterReportFulfillmentFragment.html :: content (fulfillment=${answer.semesterReportFulfillment})"> </div>
+        <div th:if="${answer.studyReportFulfillment}" th:insert="fulfillmentFragments/studyReportFulfillmentFragment.html :: content (fulfillment=${answer.studyReportFulfillment})"> </div>
+
+    </div>
+
 
     <script  th:inline="javascript">
 
         //see https://stackoverflow.com/questions/56426744/how-to-play-the-output-audio-from-dialogflow-int-array
-
-
 
         function playOutput(byteArray){
 
