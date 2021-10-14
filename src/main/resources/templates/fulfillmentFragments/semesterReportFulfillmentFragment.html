@@ -6,6 +6,9 @@
 <body>
 
 <div th:fragment="content (fulfillment)">
+
+    <h3>Semester-Report-Anfrage erfolgreich abgeschlossen</h3>
+
     <span>Klicke hier, um die Datei herunterzuladen:</span>
     <button th:text="'Download ' + ${fulfillment.reportSemester} + '-' + ${fulfillment.semester} + '-' + ${fulfillment.year} + '.pdf'"></button>
 

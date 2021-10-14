@@ -2,4 +2,12 @@
 .inline { display: inline-block; }
 .block { display: block; }
 
+.user-message {
+    color: blue;
+}
+
+.bot-message {
+    color: red;
+}
+
 #left {float:left;}

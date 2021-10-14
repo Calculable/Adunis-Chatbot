@@ -21,8 +21,9 @@ public class ChatBotController {
 
     @GetMapping(value = {"/", "/index"})
 	public String openHomePage(Model model) {
+        model.addAttribute("chatHistory", chatBotService.getChatHistory());
         return "index";
-	}
+    }
 
 	@PostMapping(value = {"/", "/index"})
 	public String addComment(UserInput input
@@ -31,6 +32,8 @@ public class ChatBotController {
         System.out.println(input.getUserText());
         ChatBotAnswer answer = chatBotService.sendMessage(input.getUserText());
 		model.addAttribute("answer", answer);
+        model.addAttribute("chatHistory", chatBotService.getChatHistory());
+
         SoundPlayer.playClip(answer.getOutputAudio()); //ok this is a little hack ;) the audio should be played on the client, not on the server but it works for the demo :D
         return "index";
 	}

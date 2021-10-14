@@ -1,11 +1,14 @@
 package ch.ost.adunischatbot.service;
 
 import ch.ost.adunischatbot.model.ChatBotAnswer;
+import ch.ost.adunischatbot.model.ChatHistoryMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.google.cloud.dialogflow.v2.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -17,13 +20,18 @@ public class ChatBotService {
     private SessionsClient sessionsClient;
     private SessionName session;
 
+    private List<ChatHistoryMessage> chatHistory;
+
     @Autowired
     public ChatBotService() throws IOException {
+        chatHistory = new ArrayList<>();
         sessionsClient = SessionsClient.create();
         session = SessionName.of(PROJECT_ID, UUID.randomUUID().toString());
     }
 
     public ChatBotAnswer sendMessage(String userMessage) {
+
+        chatHistory.add(new ChatHistoryMessage(userMessage, true));
 
         TextInput.Builder textInput = TextInput.newBuilder()
                 .setText(userMessage)
@@ -48,7 +56,12 @@ public class ChatBotService {
                         .build();
 
         DetectIntentResponse response = sessionsClient.detectIntent(detectIntentRequest);
-        return new ChatBotAnswer(response);
+        ChatBotAnswer answer = new ChatBotAnswer(response);
+        chatHistory.add(new ChatHistoryMessage(answer.getAnswerMessage(), false));
+        return answer;
     }
 
+    public List<ChatHistoryMessage> getChatHistory() {
+        return chatHistory;
+    }
 }

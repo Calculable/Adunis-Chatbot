@@ -50,14 +50,27 @@
 
     </div>
 
-    <div id="fulfillment" style="background-color: lightgreen; display: inline-block" th:if="${answer?.hasAllNecessaryInformation()}">
+    <div id="fulfillment" style="background-color: lightgreen; display: inline-block" th:if="${answer?.courseChangeFulfillment != null or answer?.exmatriculationFulfillment != null or answer?.pauseStudyFulfillment != null or answer?.semesterReportFulfillment != null or answer?.studyReportFulfillment != null}">
 
-        <h3>Anfrage erfolgreich abgeschlossen</h3>
         <div th:if="${answer.courseChangeFulfillment}" th:insert="fulfillmentFragments/courseChangeFulfillmentFragment.html :: content (fulfillment=${answer.courseChangeFulfillment})"> </div>
         <div th:if="${answer.exmatriculationFulfillment}" th:insert="fulfillmentFragments/exmatriculationFulfillmentFragment.html :: content (fulfillment=${answer.exmatriculationFulfillment})"> </div>
         <div th:if="${answer.pauseStudyFulfillment}" th:insert="fulfillmentFragments/pauseStudyFulfillmentFragment.html :: content (fulfillment=${answer.pauseStudyFulfillment})"> </div>
         <div th:if="${answer.semesterReportFulfillment}" th:insert="fulfillmentFragments/semesterReportFulfillmentFragment.html :: content (fulfillment=${answer.semesterReportFulfillment})"> </div>
         <div th:if="${answer.studyReportFulfillment}" th:insert="fulfillmentFragments/studyReportFulfillmentFragment.html :: content (fulfillment=${answer.studyReportFulfillment})"> </div>
+
+    </div>
+
+    <div th:if="${chatHistory}">
+
+        <h3>Chatverlauf</h3>
+
+        <div th:each="chatMessage : ${chatHistory}">
+            <span th:classappend="${chatMessage.userMessage ? 'user-message' : 'bot-message'}">
+                <strong><span th:text="${chatMessage.displayTime} + ': '"/></strong>
+                <span th:text="${chatMessage.userMessage ? ' (Sie) ' : ' (Roboter) '}"></span>
+                <span th:text="${chatMessage.message}"/>
+            </span>
+        </div>
 
     </div>
 
