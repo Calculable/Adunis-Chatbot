@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="headerfiles">
     <meta charset="UTF-8" />
+    <link rel = "stylesheet" type = "text/css" href = "css/style.css" />
 </head>
 <body>
 
@@ -9,8 +10,7 @@
 
     <p style="margin-top:0px;">Anfrage erfolgreich abgeschlossen</p>
 
-    <button style="border:solid; border-width: 2px;  padding:5px; margin:5px; border-color:blue;" th:text="'Download ' + ${fulfillment.report} + '.pdf'"></button>
-
+    <button style="border:solid; border-width: 2px; padding:5px; margin:5px; border-color:blue;" th:text="'Download ' + ${fulfillment.report} + '.pdf'"></button>
 
 </div>
 

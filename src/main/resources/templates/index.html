@@ -23,14 +23,13 @@
 	    </form>
 	</div>
 	
-	<section id="attention" th:if="${!answer.hasAllNecessaryInformation()}">
+	<section id="attention" th:if="${answer?.userDataFields != null and answer.userDataFields.size() < 0 and !answer.hasAllNecessaryInformation()}">
 		<p id="noDataText" th:text="${'Benötigte Felder:'}"></p> 
         <div th:each="entry : ${answer.userDataFields}">
             <span th:text="'- ' + ${entry.key} + ': '"/>
             <span th:text="${#strings.isEmpty(entry.value) ? '?' : entry.value}"/>
          </div>
-	</section>
-	
+	</section>	
 	
     <section id="fulfillment" th:if="${answer?.courseChangeFulfillment != null or answer?.exmatriculationFulfillment != null or answer?.pauseStudyFulfillment != null or answer?.semesterReportFulfillment != null or answer?.studyReportFulfillment != null}">
         <div id="noDataText" th:if="${answer.courseChangeFulfillment}" th:insert="fulfillmentFragments/courseChangeFulfillmentFragment.html :: content (fulfillment=${answer.courseChangeFulfillment})"> </div>
@@ -47,12 +46,10 @@
 		
 		<div id="robotAnswer">
 			<img  id="sprechblase" src="img/speechBubble.png" width="400" height="80"><br><br>
-			<h3  id="textOnSpeekbubble" th:if="${answer?.answerMessage}" th:text="${answer.answerMessage}"></h3>
+			<p  id="textOnSpeekbubble" th:if="${answer?.answerMessage}" th:text="${answer.answerMessage}"></p>
 	        <p id="intent" th:if="${answer?.intend}" th:text="'Ich habe den Intent ' + ${answer.intend} + ' mit einer Sicherheit von ' + ${answer.intendConfidenceScore} + ' erkannt.'"></p>
 		</div>
 	</section>
-    
- 
 
     <div id="chatHistory" th:if="${chatHistory}">
         <p style="color:#504c49"><strong>Chatverlauf</strong></p>
