@@ -4,66 +4,58 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>ADUNIS Chatbot</title>
-      <link rel = "stylesheet" type = "text/css" href = "css/style.css" />
+    <link rel = "stylesheet" type = "text/css" href = "css/style.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
 
-  </head>
-  <body>
-
-  	<h1>Willkommen beim ADUNIS Chatbot</h1>
-
-    <form action="/" method="POST">
-
-    <label for="userText">Nachricht</label>
-    <input type="text" id="userText" name="userText">
-
-    <button type="submit">Senden</button>
-
-    </form>
-	<div id="parent">
-		<img class="inline" id="left" src="img/robot.gif" width="400" height="400"><br><br>
-		<h2 class="block" th:if="${answer?.answerMessage}" th:text="'Der Roboter sagt: '"></h2>
-		<h2 class="block" th:if="${answer?.answerMessage}" th:text="${answer.answerMessage}"></h2>
+	<div id="welcome">
+		<h1 id="titleWelcome" >Willkommen beim ADUNIS Chatbot</h1>
 	</div>
-
-
-
-	<div id="sentiment" class="block">
-		<h3 th:if="${answer?.sentimentScore}" th:text="'User Sentiment bei: ' + ${answer.sentimentScore}"></h3>
+  	
+	<div id="input">
+		<form  id="inputForm" action="/" method="POST">
+		    <label for="userText"></label>
+		    <input type="text" id="userText" name="userText" placeholder="Frag den Roboter was!">
+		    <button id="senButton" type="submit"><i class="fa fa-send"></i></button>
+		    <i th:if="${answer?.sentimentScore >= 0.5}" class='fa fa-smile-o' id="smile"></i>
+			<i th:if="${answer?.sentimentScore < 0.5}" class='fa fa-meh-o' id="meh" ></i>
+	    </form>
 	</div>
-
-    <div id="intend" class="block">
-        <h3 th:if="${answer?.intend}" th:text="'Erkannter Intend: ' + ${answer.intend}"></h3>
-        <h3 th:if="${answer?.intendConfidenceScore}" th:text="'Erkannt mit Sicherheit: ' + ${answer.intendConfidenceScore}"></h3>
-    </div>
-
-    <div id="user-data-fields" class="block" th:if="${answer?.userDataFields != null and answer.userDataFields.size() &gt; 0}" >
-        <h3>Werte</h3>
-
-
+	
+	<div id="attention" th:if="${answer?.userDataFields != null and answer.userDataFields.size() &gt; 0}" >
+        <p th:text="${answer.hasAllNecessaryInformation()? 'Download.' : 'Mir fehlen noch Felder:'}"></p>
         <div th:each="entry : ${answer.userDataFields}">
-            <strong><span th:text="${entry.key} + ': '"/></strong>
+            <span th:text="${entry.key} + ': '"/>
             <span th:text="${#strings.isEmpty(entry.value) ? '?' : entry.value}"/>
          </div>
-
-
-        <h3 th:text="${answer.hasAllNecessaryInformation()? 'Alle benötigten Informationen liegen vor.' : 'Noch nicht alle benötigten Informationen liegen vor.'}"></h3>
-
     </div>
+    
+    <section id="GridWrapper">
+		<div id="robotImage">
+			<img id="robby" src="img/robot.gif" width="400" height="400"><br><br>
+		</div>
+		
+		<div id="robotAnswer">
+			<img  id="sprechblase" src="img/speechBubble.png" width="400" height="80"><br><br>
+			<h3  id="textOnSpeekbubble" th:if="${answer?.answerMessage}" th:text="${answer.answerMessage}"></h3>
+	        <p id="intent" th:if="${answer?.intend}" th:text="'Ich habe den Intent ' + ${answer.intend} + ' mit einer Sicherheit von ' + ${answer.intendConfidenceScore} + ' erkannt.'"></p>
+		</div>
+	</section>
 
-    <div id="fulfillment" style="background-color: lightgreen; display: inline-block" th:if="${answer?.courseChangeFulfillment != null or answer?.exmatriculationFulfillment != null or answer?.pauseStudyFulfillment != null or answer?.semesterReportFulfillment != null or answer?.studyReportFulfillment != null}">
-
+<!--
+    <div id="fulfillment" style="background-color: lightgreen; display: inline-block" th:if="${answer?.courseChangeFulfillment != null or answer?.exmatriculationFulfillment != null or answer?.pauseStudyFulfillment != null or answer?.semesterReportFulfillment != null or answer?.studyReportFulfillment != null}"
         <div th:if="${answer.courseChangeFulfillment}" th:insert="fulfillmentFragments/courseChangeFulfillmentFragment.html :: content (fulfillment=${answer.courseChangeFulfillment})"> </div>
         <div th:if="${answer.exmatriculationFulfillment}" th:insert="fulfillmentFragments/exmatriculationFulfillmentFragment.html :: content (fulfillment=${answer.exmatriculationFulfillment})"> </div>
         <div th:if="${answer.pauseStudyFulfillment}" th:insert="fulfillmentFragments/pauseStudyFulfillmentFragment.html :: content (fulfillment=${answer.pauseStudyFulfillment})"> </div>
         <div th:if="${answer.semesterReportFulfillment}" th:insert="fulfillmentFragments/semesterReportFulfillmentFragment.html :: content (fulfillment=${answer.semesterReportFulfillment})"> </div>
         <div th:if="${answer.studyReportFulfillment}" th:insert="fulfillmentFragments/studyReportFulfillmentFragment.html :: content (fulfillment=${answer.studyReportFulfillment})"> </div>
-
     </div>
+    
+ -->
 
-    <div th:if="${chatHistory}">
-
-        <h3>Chatverlauf</h3>
-
+    <div id="chatHistory" th:if="${chatHistory}">
+        <p><strong>Chatverlauf</strong></p>
         <div th:each="chatMessage : ${chatHistory}">
             <span th:classappend="${chatMessage.userMessage ? 'user-message' : 'bot-message'}">
                 <strong><span th:text="${chatMessage.displayTime} + ': '"/></strong>
@@ -71,9 +63,7 @@
                 <span th:text="${chatMessage.message}"/>
             </span>
         </div>
-
-    </div>
-
+    </div> 
 
     <script  th:inline="javascript">
 
@@ -119,5 +109,5 @@
 
     </script>
 	
-  </body>
+</body>
 </html>

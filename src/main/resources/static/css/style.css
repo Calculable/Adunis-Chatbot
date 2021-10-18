@@ -1,13 +1,118 @@
 
-.inline { display: inline-block; }
-.block { display: block; }
-
 .user-message {
     color: blue;
+}
+.aside {
+	font-size: 10px;
+	left: 20%;
+	color: #f3f2f2;
+}
+
+
+
+
+#welcome {
+	color: #504c49;
+	width: 100%;
+}
+
+#titleWelcome {
+	width: 100%;
+}
+
+#input {
+	color: blue;
+}
+
+#userText {
+	background-color: #f3f2f2;
+	border:none;
+	padding: 10px;
+	width:400px;
+}
+
+#senButton {
+	background-color: #f3f2f2;
+	border:none;
+	padding: 10px;
+	color: blue;
+}
+
+#inputForm {
+	width: 100%;
+}
+
+#smile {
+	color: green;
+	padding-left:10px;
+	width: 40px;
+	height: 40px;
+	font-size:30px;
+}
+
+#meh {
+	color: red;
+	padding-left:10px;
+	width: 40px;
+	height: 40px;
+	font-size:30px;
+	padding-top: 10px;
+}
+
+#GridWrapper {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 0px;
+	grid-auto-rows: minmax(10px, auto);
+}
+
+#robotImage {
+	grid-column: 1;
+	grid-row:1;
+}
+
+#robotAnswer {
+	grid-column: 2;
+	grid-row:1;
+	position:relative;
+}
+
+#textOnSpeekbubble {
+	position: absolute;
+	text-align: left;
+    top: 25%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    color: #6a6662;
+}
+
+#sprechblase {
+	position: absolute;
+	top: 20%;
+	left: -20%;
+}
+
+#intent {
+	color: #adadad;
+	position: absolute;
+	top:38%;
+	font-size: 10px;
+	left: -5%;
+}
+
+#attention {
+	background-color: #ef8585;
+	width: 300px;
+}
+
+#fulfillment {
+
+}
+
+#chatHistory {
+	background-color: #f8f8f8;
 }
 
 .bot-message {
     color: red;
 }
-
-#left {float:left;}
