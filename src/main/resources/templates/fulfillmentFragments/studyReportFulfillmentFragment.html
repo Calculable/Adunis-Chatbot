@@ -7,10 +7,9 @@
 
 <div th:fragment="content (fulfillment)">
 
-    <h3>Studiums-Report-Anfrage erfolgreich abgeschlossen</h3>
+    <p style="margin-top:0px;">Anfrage erfolgreich abgeschlossen</p>
 
-    <span>Klicke hier, um die Datei herunterzuladen:</span>
-    <button th:text="'Download ' + ${fulfillment.report} + '.pdf'"></button>
+    <button style="border:solid; border-width: 2px;  padding:5px; margin:5px; border-color:blue;" th:text="'Download ' + ${fulfillment.report} + '.pdf'"></button>
 
 
 </div>

@@ -23,13 +23,22 @@
 	    </form>
 	</div>
 	
-	<div id="attention" th:if="${answer?.userDataFields != null and answer.userDataFields.size() &gt; 0}" >
-        <p th:text="${answer.hasAllNecessaryInformation()? 'Download.' : 'Mir fehlen noch Felder:'}"></p>
+	<section id="attention" th:if="${!answer.hasAllNecessaryInformation()}">
+		<p id="noDataText" th:text="${'Benötigte Felder:'}"></p> 
         <div th:each="entry : ${answer.userDataFields}">
-            <span th:text="${entry.key} + ': '"/>
+            <span th:text="'- ' + ${entry.key} + ': '"/>
             <span th:text="${#strings.isEmpty(entry.value) ? '?' : entry.value}"/>
          </div>
-    </div>
+	</section>
+	
+	
+    <section id="fulfillment" th:if="${answer?.courseChangeFulfillment != null or answer?.exmatriculationFulfillment != null or answer?.pauseStudyFulfillment != null or answer?.semesterReportFulfillment != null or answer?.studyReportFulfillment != null}">
+        <div id="noDataText" th:if="${answer.courseChangeFulfillment}" th:insert="fulfillmentFragments/courseChangeFulfillmentFragment.html :: content (fulfillment=${answer.courseChangeFulfillment})"> </div>
+        <div id="noDataText" th:if="${answer.exmatriculationFulfillment}" th:insert="fulfillmentFragments/exmatriculationFulfillmentFragment.html :: content (fulfillment=${answer.exmatriculationFulfillment})"> </div>
+        <div id="noDataText" th:if="${answer.pauseStudyFulfillment}" th:insert="fulfillmentFragments/pauseStudyFulfillmentFragment.html :: content (fulfillment=${answer.pauseStudyFulfillment})"> </div>
+        <div id="noDataText" th:if="${answer.semesterReportFulfillment}" th:insert="fulfillmentFragments/semesterReportFulfillmentFragment.html :: content (fulfillment=${answer.semesterReportFulfillment})"> </div>
+        <div id="noDataText" th:if="${answer.studyReportFulfillment}" th:insert="fulfillmentFragments/studyReportFulfillmentFragment.html :: content (fulfillment=${answer.studyReportFulfillment})"> </div>
+    </section>
     
     <section id="GridWrapper">
 		<div id="robotImage">
@@ -42,20 +51,11 @@
 	        <p id="intent" th:if="${answer?.intend}" th:text="'Ich habe den Intent ' + ${answer.intend} + ' mit einer Sicherheit von ' + ${answer.intendConfidenceScore} + ' erkannt.'"></p>
 		</div>
 	</section>
-
-<!--
-    <div id="fulfillment" style="background-color: lightgreen; display: inline-block" th:if="${answer?.courseChangeFulfillment != null or answer?.exmatriculationFulfillment != null or answer?.pauseStudyFulfillment != null or answer?.semesterReportFulfillment != null or answer?.studyReportFulfillment != null}"
-        <div th:if="${answer.courseChangeFulfillment}" th:insert="fulfillmentFragments/courseChangeFulfillmentFragment.html :: content (fulfillment=${answer.courseChangeFulfillment})"> </div>
-        <div th:if="${answer.exmatriculationFulfillment}" th:insert="fulfillmentFragments/exmatriculationFulfillmentFragment.html :: content (fulfillment=${answer.exmatriculationFulfillment})"> </div>
-        <div th:if="${answer.pauseStudyFulfillment}" th:insert="fulfillmentFragments/pauseStudyFulfillmentFragment.html :: content (fulfillment=${answer.pauseStudyFulfillment})"> </div>
-        <div th:if="${answer.semesterReportFulfillment}" th:insert="fulfillmentFragments/semesterReportFulfillmentFragment.html :: content (fulfillment=${answer.semesterReportFulfillment})"> </div>
-        <div th:if="${answer.studyReportFulfillment}" th:insert="fulfillmentFragments/studyReportFulfillmentFragment.html :: content (fulfillment=${answer.studyReportFulfillment})"> </div>
-    </div>
     
- -->
+ 
 
     <div id="chatHistory" th:if="${chatHistory}">
-        <p><strong>Chatverlauf</strong></p>
+        <p style="color:#504c49"><strong>Chatverlauf</strong></p>
         <div th:each="chatMessage : ${chatHistory}">
             <span th:classappend="${chatMessage.userMessage ? 'user-message' : 'bot-message'}">
                 <strong><span th:text="${chatMessage.displayTime} + ': '"/></strong>

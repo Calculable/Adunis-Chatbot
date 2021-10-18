@@ -101,18 +101,32 @@
 }
 
 #attention {
-	background-color: #ef8585;
+	border:solid;
+	border-color:#cd6666;
+	background-color:#f5e2e2;
 	width: 300px;
+	margin-top:20px;
+	padding: 15px;
 }
 
 #fulfillment {
-
+	border:solid;
+	border-color:blue;
+	width: 300px;
+	margin-top:20px;
+	padding: 15px;
 }
+
+#noDataText {
+	margin:0px;
+	padding:0px;
+}
+
 
 #chatHistory {
 	background-color: #f8f8f8;
 }
 
 .bot-message {
-    color: red;
+    color: #cd6666;
 }
