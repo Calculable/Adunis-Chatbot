@@ -26,7 +26,7 @@ public class ChatBotController {
     }
 
 	@PostMapping(value = {"/", "/index"})
-	public String addComment(UserInput input
+	public String getBotAnswer(UserInput input
 			, Model model) {
 
         System.out.println(input.getUserText());
