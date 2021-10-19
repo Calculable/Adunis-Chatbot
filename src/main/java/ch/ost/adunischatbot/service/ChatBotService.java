@@ -5,6 +5,7 @@ import ch.ost.adunischatbot.model.ChatHistoryMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.google.cloud.dialogflow.v2.*;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@SessionScope
 public class ChatBotService {
 
     private final static String PROJECT_ID = "adunis-ryej";
