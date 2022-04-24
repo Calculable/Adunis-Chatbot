@@ -12,7 +12,7 @@
 	<div id="welcome">
 		<h1 id="titleWelcome" >Willkommen beim ADUNIS Chatbot</h1>
 	</div>
-  	
+
 	<div id="input">
 		<form  id="inputForm" action="/" method="POST">
 		    <label for="userText"></label>
@@ -22,15 +22,15 @@
 			<i th:if="${answer?.sentimentScore < 0.5}" class='fa fa-meh-o' id="meh" ></i>
 	    </form>
 	</div>
-	
+
 	<section id="attention" th:if="${answer?.userDataFields != null and answer.userDataFields.size() < 0 and !answer.hasAllNecessaryInformation()}">
-		<p id="noDataText" th:text="${'Benötigte Felder:'}"></p> 
+		<p id="noDataText" th:text="${'Benötigte Felder:'}"></p>
         <div th:each="entry : ${answer.userDataFields}">
             <span th:text="'- ' + ${entry.key} + ': '"/>
             <span th:text="${#strings.isEmpty(entry.value) ? '?' : entry.value}"/>
          </div>
-	</section>	
-	
+	</section>
+
     <section id="fulfillment" th:if="${answer?.courseChangeFulfillment != null or answer?.exmatriculationFulfillment != null or answer?.pauseStudyFulfillment != null or answer?.semesterReportFulfillment != null or answer?.studyReportFulfillment != null}">
         <div id="noDataText" th:if="${answer.courseChangeFulfillment}" th:insert="fulfillmentFragments/courseChangeFulfillmentFragment.html :: content (fulfillment=${answer.courseChangeFulfillment})"> </div>
         <div id="noDataText" th:if="${answer.exmatriculationFulfillment}" th:insert="fulfillmentFragments/exmatriculationFulfillmentFragment.html :: content (fulfillment=${answer.exmatriculationFulfillment})"> </div>
@@ -38,12 +38,12 @@
         <div id="noDataText" th:if="${answer.semesterReportFulfillment}" th:insert="fulfillmentFragments/semesterReportFulfillmentFragment.html :: content (fulfillment=${answer.semesterReportFulfillment})"> </div>
         <div id="noDataText" th:if="${answer.studyReportFulfillment}" th:insert="fulfillmentFragments/studyReportFulfillmentFragment.html :: content (fulfillment=${answer.studyReportFulfillment})"> </div>
     </section>
-    
+
     <section id="GridWrapper">
 		<div id="robotImage">
 			<img id="robby" src="img/robot.gif" width="400" height="400"><br><br>
 		</div>
-		
+
 		<div id="robotAnswer">
 			<img  id="sprechblase" src="img/speechBubble.png" width="400" height="80"><br><br>
 			<p  id="textOnSpeekbubble" th:if="${answer?.answerMessage}" th:text="${answer.answerMessage}"></p>
@@ -51,8 +51,9 @@
 		</div>
 	</section>
 
+
     <div id="chatHistory" th:if="${chatHistory}">
-        <p style="color:#504c49"><strong>Chatverlauf</strong></p>
+        <p class="chat-history-header"><strong>Chatverlauf</strong></p>
         <div th:each="chatMessage : ${chatHistory}">
             <span th:classappend="${chatMessage.userMessage ? 'user-message' : 'bot-message'}">
                 <strong><span th:text="${chatMessage.displayTime} + ': '"/></strong>
@@ -60,12 +61,11 @@
                 <span th:text="${chatMessage.message}"/>
             </span>
         </div>
-    </div> 
+    </div>
 
     <script  th:inline="javascript">
 
         //see https://stackoverflow.com/questions/56426744/how-to-play-the-output-audio-from-dialogflow-int-array
-
         function playOutput(byteArray){
 
             var arrayBuffer = new ArrayBuffer(byteArray.length);
@@ -105,6 +105,6 @@
         /*]]>*/
 
     </script>
-	
+
 </body>
 </html>

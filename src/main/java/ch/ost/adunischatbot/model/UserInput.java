@@ -8,7 +8,6 @@ public class UserInput {
         userText = null;
     }
 
-
     public String getUserText() {
         return userText;
     }

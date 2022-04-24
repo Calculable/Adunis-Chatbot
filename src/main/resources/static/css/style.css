@@ -12,8 +12,6 @@ body {
   font-family: 'Arial', sans-serif, monospace;
 }
 
-
-
 #welcome {
 	color: #504c49;
 	width: 100%;
@@ -132,4 +130,16 @@ body {
 
 .bot-message {
     color: #cd6666;
+}
+
+.fragment-title {
+	margin-top:0px;
+}
+
+.download-link {
+	border:solid; border-width: 2px;  padding:5px; margin:5px; border-color:blue;"
+}
+
+.chat-history-header {
+	color:#504c49
 }
